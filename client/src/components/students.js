@@ -6,7 +6,7 @@ function Students() {
     const [students, setStudents] = useState([]);
 
     useEffect(() => {
-        fetch("http://localhost:4002/api/students")
+        fetch("http://localhost:4002/api/contacts")
         .then((response) => response.json())
         .then(students =>{
             //setStudents((students[3]));
