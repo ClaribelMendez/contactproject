@@ -16,15 +16,7 @@ app.get('/', (req, res) => {
 
 //create the get request
 app.get('/api/contacts', cors(), async (req, res) => {
-    // const STUDENTS = [
-
-    //     { id: 1, firstName: 'Lisa', lastName: 'Lee' },
-    //     { id: 2, firstName: 'Eileen', lastName: 'Long' },
-    //     { id: 3, firstName: 'Fariba', lastName: 'Dako' },
-    //     { id: 4, firstName: 'Cristina', lastName: 'Rodriguez' },
-    //     { id: 5, firstName: 'Andrea', lastName: 'Trejo' },
-    // ];
-    // res.json(STUDENTS);
+   
     try{
         const { rows: contacts } = await db.query('SELECT * FROM contacts');
         res.send(contacts);
@@ -34,12 +26,12 @@ app.get('/api/contacts', cors(), async (req, res) => {
 });
 
 //create the POST request
-app.post('/api/students', cors(), async (req, res) => {
-    const newUser = { firstname: req.body.firstname, lastname: req.body.lastname }
-    console.log([newUser.firstname, newUser.lastname]);
+app.post('/api/contacts', cors(), async (req, res) => {
+    const newContact = { firstname: req.body.firstname, lastname: req.body.lastname, phonenumber: req.body.phonenumber, emailaddress: req.body.emailaddress}
+    console.log([newContact.firstname, newContact.lastname]);
     const result = await db.query(
-        'INSERT INTO students(firstname, lastname) VALUES($1, $2) RETURNING *',
-        [newUser.firstname, newUser.lastname]
+        'INSERT INTO contacts(firstname, lastname, phonenumber, emailaddress) VALUES($1, $2,$3,$4) RETURNING *',
+        [newContact.firstname, newContact.lastname, newContact.phonenumber, newContact.emailaddress]
     );
     console.log(result.rows[0]);
     res.json(result.rows[0]);

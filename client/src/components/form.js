@@ -1,42 +1,44 @@
 import { useState } from "react";
 
 const Form = (props) => {
-    const [student, setStudent] = useState({
+    const [contacts, setContacts] = useState({
         firstname: "",
-        lastname: ""
+        lastname: "",
+        phonenumber: 0,
+        emailaddress: ""
     });
 
     //create functions that handle the event of the user typing into the form
     const handleNameChange = (event) => {
         const firstname = event.target.value;
-        setStudent((student) => ({ ...student, firstname }));
+        setContacts((contact) => ({ ...contact, firstname }));
 
     }
 
     const handleLastnameChange = (event) => {
         const lastname = event.target.value;
-        setStudent((student) => ({ ...student, lastname }));
+        setContacts((contact) => ({ ...contact, lastname }));
 
     }
 
     //A function to handle the post request
-    const postStudent = (newStudent) => {
-        return fetch('http://localhost:4002/api/students', {
+    const postContact = (newContact) => {
+        return fetch('http://localhost:4002/api/contacts', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'}, 
-        body: JSON.stringify(newStudent)
+        body: JSON.stringify(newContact)
       }).then((response) => {
           return response.json()
       }).then((data) => {
         console.log("From the post ", data);
-        props.addStudent(data);
+        props.addContact(data);
       
     });
     }
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        postStudent(student);
+        postContact(contacts);
         
     };
 
@@ -49,7 +51,7 @@ const Form = (props) => {
                     id="add-user-name"
                     placeholder="First Name"
                     required
-                    value={student.name}
+                    value={contacts.firstname}
                     onChange={handleNameChange}
 
                 />
@@ -59,7 +61,7 @@ const Form = (props) => {
                     id="add-user-lastname"
                     placeholder="Last Name"
                     required
-                    value={student.lastname}
+                    value={contacts.lastname}
                     onChange={handleLastnameChange}
                 />
             </fieldset>
